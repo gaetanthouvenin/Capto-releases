@@ -1,11 +1,15 @@
 # Capto
 
+**English** · [Français](README.fr.md)
+
 Capto is a screen-capture tool for Windows 10 and 11: grab a region, a window or a screen from any application, annotate it, then paste, save or find it again later in the history.
 
 - **One keystroke away.** Global shortcuts work from any application; Capto waits in the notification area.
 - **Paste right away.** By default, every capture is in the clipboard as soon as it is taken.
 - **Nothing is lost.** Every capture is kept in a searchable history, with its annotations.
 - **Everything stays on your PC.** No account, no cloud, no telemetry. The only network access is the update check against this repository.
+
+![The Capto main window: the capture buttons, the history and an annotated capture](docs/images/en/main.png)
 
 This repository holds the installers, the update packages and the release notes of Capto. The source code is not public.
 
@@ -56,6 +60,8 @@ Closing the main window keeps Capto running in the notification area (this can b
 
 The same commands are in the toolbar of the main window (the less common ones under **More captures**) and in the menu of the notification-area icon.
 
+![The More captures menu: repeat last region and the delayed captures](docs/images/en/more.png)
+
 ### Selecting a region or a window
 
 When you start a region or window capture, the screen freezes: what you select is exactly what was on screen when you pressed the shortcut, even if a menu or a tooltip closes in the meantime.
@@ -64,6 +70,12 @@ When you start a region or window capture, the screen freezes: what you select i
 - **Window:** hover a window to highlight it, then click. **Tab** moves to the next window, which helps with windows hidden behind others.
 - **W** switches to window selection, **R** back to region selection.
 - **Esc** cancels.
+
+The bar at the top of the screen recalls the mode and the keys; the size of the rectangle is shown at its corner.
+
+<img src="docs/images/en/overlay-region.png" width="720" alt="Selecting a region: the rest of the screen is dimmed and the size of the selection is shown">
+
+
 
 ### Region formats
 
@@ -74,9 +86,12 @@ The region selection can follow a format instead of a free rectangle:
 
 In the region selection, **C** cycles through the formats, **1** to **9** pick one directly and **0** goes back to **Free**. Capto remembers the last format you used. You can add up to 8 formats of your own in **Settings › Region formats**.
 
+<img src="docs/images/en/overlay-ratio.png" width="720" alt="Selecting a region in 16:9: the format is shown next to the size">
+
+
 ### Delayed capture
 
-A delayed capture shows a countdown (3, 5 or 10 seconds, 5 by default) before capturing, which leaves time to open a menu or hover an element. **Esc** cancels the countdown. The delayed entries are under **More captures** in the main window and **Delayed capture** in the notification-area menu; the delay is set in **Settings › Capture**.
+A delayed capture shows a small countdown in a corner of the screen (3, 5 or 10 seconds, 5 by default; it never appears in the image) before capturing, which leaves time to open a menu or hover an element. **Esc** cancels the countdown. The delayed entries are under **More captures** in the main window and **Delayed capture** in the notification-area menu; the delay is set in **Settings › Capture**.
 
 ### After a capture
 
@@ -101,6 +116,8 @@ The history can clean itself up: in **Settings › Storage**, set how many days 
 
 Open it with **Annotate** (or **Enter**) on a capture, or automatically after every capture if you turn on **Open the editor after the capture**.
 
+![The annotation editor: the tools on the left, the properties of the arrow tool at the top, a capture with a highlight, a frame, an arrow, a text and two numbered badges](docs/images/en/editor.png)
+
 | Tool | Key | Use |
 |---|---|---|
 | Select | V | Select, move, resize, duplicate (Ctrl+D) or delete (Del) an annotation. |
@@ -120,13 +137,37 @@ Open it with **Annotate** (or **Enter**) on a capture, or automatically after ev
 
 ## Settings
 
-Open them with **Ctrl+,** in the main window or from the notification-area menu.
+Open them with **Ctrl+,** in the main window or from the notification-area menu. Changes apply when you click **Save**.
 
-- **General:** start with Windows, start minimized, close to the notification area, notification after a capture, update check, theme (system, light or dark) and language. Capto follows the Windows language by default and is available in English, French, German, Spanish, Italian, Portuguese, Dutch, Chinese, Japanese and Korean; a language change applies at the next start.
-- **Capture:** copy to the clipboard, also copy the file (useful for Outlook attachments), open the editor after the capture, play a sound, include the mouse pointer, delay of delayed captures.
-- **Region formats:** built-in and custom aspect ratios and fixed sizes.
-- **Storage:** history folder, retention, default export folder, file-name pattern, format (PNG or JPEG) and JPEG quality. The file-name pattern accepts `{date}`, `{time}`, `{kind}`, `{width}`, `{height}` and `{index}`; the default is `Capto_{date}_{time}`.
-- **Shortcuts:** click a shortcut, then press the new key combination; **Backspace** clears the optional ones (delayed region, repeat last region).
+### General
+
+Start with Windows, start minimized, close to the notification area, notification after a capture, update check, theme (system, light or dark) and language. Capto follows the Windows language by default and is available in English, French, German, Spanish, Italian, Portuguese, Dutch, Chinese, Japanese and Korean; a language change applies at the next start.
+
+<img src="docs/images/en/settings-general.png" width="620" alt="General settings">
+
+### Capture
+
+Copy to the clipboard, also copy the file (useful for Outlook attachments), open the editor after the capture, play a sound, include the mouse pointer, delay of delayed captures.
+
+<img src="docs/images/en/settings-capture.png" width="620" alt="Capture settings">
+
+### Region formats
+
+The built-in formats, with the number key that picks each one during a selection, and up to 8 aspect ratios or fixed sizes of your own.
+
+<img src="docs/images/en/settings-formats.png" width="620" alt="Region format settings">
+
+### Storage
+
+History folder, retention, default export folder, file-name pattern, format (PNG or JPEG) and JPEG quality. The file-name pattern accepts `{date}`, `{time}`, `{kind}`, `{width}`, `{height}` and `{index}`; the default is `Capto_{date}_{time}`.
+
+<img src="docs/images/en/settings-storage.png" width="620" alt="Storage settings">
+
+### Shortcuts
+
+Click a shortcut, then press the new key combination; **Backspace** clears the optional ones (delayed region, repeat last region).
+
+<img src="docs/images/en/settings-hotkeys.png" width="620" alt="Shortcut settings">
 
 ## Keyboard shortcuts
 
@@ -175,4 +216,4 @@ Uninstall Capto from **Windows Settings › Apps › Installed apps**. Your capt
 
 ---
 
-Releases are published automatically by the release workflow of the source repository. This README is the only file maintained by hand.
+Releases are published automatically by the release workflow of the source repository. This README, its translation and their images are the only files maintained by hand.
