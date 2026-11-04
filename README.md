@@ -2,12 +2,12 @@
 
 **English** · [Français](README.fr.md)
 
-Capto is a screen-capture tool for Windows 10 and 11: grab a region, a window or a screen from any application, annotate it, then paste, save or find it again later in the history. It also records the screen as a video, with sound, that you can trim or turn into an animated GIF.
+Capto is a screen-capture tool for Windows 10 and 11: grab a region, a window or a screen from any application, annotate it, then paste, save or find it again later in the history. It can also capture a whole page by scrolling it, copy the text of an image, and record the screen as a video, with sound, that you can trim, turn into an animated GIF or transcribe.
 
 - **One keystroke away.** Global shortcuts work from any application; Capto waits in the notification area.
 - **Paste right away.** By default, every capture is in the clipboard as soon as it is taken.
 - **Nothing is lost.** Every capture and every video is kept in a searchable history, with its annotations.
-- **Everything stays on your PC.** No account, no cloud, no telemetry. The only network access is the update check against this repository.
+- **Everything stays on your PC.** No account, no cloud, no telemetry. The only network accesses are the update check against this repository and, if you use transcription, the one-time download of the speech model you choose.
 
 ![The Capto main window: the capture buttons, the history and an annotated capture](docs/images/en/main.png)
 
@@ -18,10 +18,13 @@ This repository holds the installers, the update packages and the release notes 
 - [Install](#install)
 - [Getting started](#getting-started)
 - [Capturing](#capturing)
+- [Scrolling capture](#scrolling-capture)
+- [Copying text](#copying-text)
 - [Recording a video](#recording-a-video)
 - [The history](#the-history)
 - [The annotation editor](#the-annotation-editor)
 - [Trimming a video and exporting a GIF](#trimming-a-video-and-exporting-a-gif)
+- [Transcribing a video](#transcribing-a-video)
 - [Settings](#settings)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Updates](#updates)
@@ -59,10 +62,12 @@ Closing the main window keeps Capto running in the notification area (this can b
 | All screens | Ctrl+Shift+Alt+F | Captures every monitor in one image. |
 | Repeat last region | Ctrl+Shift+Alt+C | Captures the same rectangle as the last region capture, without selecting it again. |
 | Delayed region | Ctrl+Shift+D | Waits a few seconds, then opens the region selection. |
+| Scrolling capture (beta) | none by default | Scrolls an area and stitches it into one tall image (see [Scrolling capture](#scrolling-capture)). |
+| Copy text from an area | none by default | Copies the text of an area instead of an image (see [Copying text](#copying-text)). |
 
-The same commands are in the toolbar of the main window (the less common ones under **More captures**) and in the menu of the notification-area icon.
+The same commands are in the toolbar of the main window (the less common ones under **More captures**) and in the menu of the notification-area icon. The two without a shortcut can be given one in **Settings › Shortcuts**.
 
-![The More captures menu: repeat last region and the delayed captures](docs/images/en/more.png)
+![The More captures menu: scrolling capture, copy text from an area, repeat last region and the delayed captures](docs/images/en/more.png)
 
 ### Selecting a region or a window
 
@@ -70,7 +75,7 @@ When you start a region or window capture, the screen freezes: what you select i
 
 - **Region:** drag to draw the rectangle; its size in pixels is shown next to it.
 - **Window:** hover a window to highlight it, then click. **Tab** moves to the next window, which helps with windows hidden behind others. The window is captured on its own, even where other windows cover it.
-- **W** switches to window selection, **R** back to region selection.
+- **W** switches to window selection, **R** back to region selection, **S** to a [scrolling capture](#scrolling-capture) and **T** to [copying text](#copying-text).
 - **Esc** cancels.
 
 The bar at the top of the screen recalls the mode and the keys; the size of the rectangle is shown at its corner.
@@ -99,6 +104,32 @@ A delayed capture shows a small countdown in a corner of the screen (3, 5 or 10 
 
 By default the capture is copied to the clipboard and added to the history. Depending on the settings, Capto can also play a sound, open the editor, show a notification (only while the main window is hidden) and draw the mouse pointer into the image.
 
+## Scrolling capture
+
+A scrolling capture grabs an area taller than the screen, such as a long web page, a document or a conversation: Capto scrolls it and stitches what it sees into one image. This feature is in beta: it scrolls downwards only, in an area that fits on one screen.
+
+1. Choose **Scrolling capture (beta)** under **More captures** or in the notification-area menu, or press **S** during a region selection.
+2. Drag over the area that scrolls, ideally with its scrollbar.
+3. Capto scrolls the area with the mouse wheel and stitches as it goes. A frame marks the area and a small toolbar shows the height captured so far; neither appears in the image.
+4. The capture stops by itself at the end of the content or at the maximum height (20,000 pixels, less for very wide areas). **Finish** (or **Esc**) stops earlier and keeps what was captured, **Cancel** keeps nothing.
+
+<img src="docs/images/en/overlay-scrolling.png" width="720" alt="Selecting the area to scroll: the Scrolling mode, the Manual chip and the size of the selection">
+
+- **Manual mode:** press **M** (or click **Manual**) before dragging to scroll the area yourself, with the wheel or the scrollbar, then click **Finish**. Scroll steadily downwards: if you go too fast, Capto asks you to scroll more slowly, and scrolling back up a little lets it find its place again.
+- When Capto cannot scroll the area (a window running as administrator, for example), it switches to manual mode and says so in its toolbar. Moving the mouse or pressing a key during the automatic scrolling also hands over to manual mode: carry on by hand, or click **Finish**.
+- The result is an ordinary capture in the history, copied to the clipboard like the others. Headers that stay at the top of the page appear only once, and the mouse pointer is never in the image. Crop and cut-out, in the editor, help to trim a long image.
+
+## Copying text
+
+Capto can read the text of an image and copy it to the clipboard, ready to paste as text. Windows itself recognises the text, on your PC.
+
+- **From the screen:** choose **Copy text from an area** under **More captures** or in the notification-area menu, or press **T** during a region selection, then drag over the text. Only the text is copied: nothing is added to the history.
+- **From a capture:** **Copy text** in the menu of a history item (right-click or **…**), or in the editor. The text is read from the image as you share it: crop first to copy only part of it; blurred text is left out and your text annotations are read too.
+
+The text keeps one line per line of the image, with a blank line between paragraphs and columns. The status bar says how many lines were copied, or that no text was recognised.
+
+Recognition uses the text recognition (OCR) languages installed in Windows, the Windows display languages by default. **Language of the recognised text**, in **Settings › Capture**, chooses another one, for example to read English captures on a French Windows. When no language is installed, Capto explains how to add one: in **Windows Settings › Time & language › Language & region**, open the options of a language and add **Optical character recognition**. Right-to-left and vertical text are not supported.
+
 ## Recording a video
 
 Capto records a region, a window or a whole screen to an MP4 video (H.264), with the sound of the computer and, if you want, your microphone.
@@ -123,6 +154,8 @@ Every capture and every video is kept in the history of the main window, newest 
 
 - **Search** (**Ctrl+F**) by name, window title or date.
 - **Copy** (**Ctrl+C**) puts the capture, with its annotations, back in the clipboard. For a video, it copies the file, ready to paste into a folder or a chat.
+- **Copy text** copies the text of the capture (see [Copying text](#copying-text)), or the transcript of a transcribed video.
+- **Transcribe**, on a video with sound, turns its speech into text (see [Transcribing a video](#transcribing-a-video)).
 - **Save** (**Ctrl+S**) writes it to the default export folder, **Save as** (**Ctrl+Shift+S**) asks where; PNG or JPEG for a capture, MP4 for a video.
 - **Drag** a capture from the history into another application (an email, a chat, a folder) to drop the image there.
 - **Annotate** (**Enter**) opens the editor.
@@ -151,7 +184,7 @@ Open it with **Annotate** (or **Enter**) on a capture, or automatically after ev
 | Cut out | X | Remove a horizontal or vertical band and join the two edges (straight, zigzag or torn edge), for example to shorten a long page. |
 
 - Colour, thickness and size are in the properties bar of the selected tool. Hold **Shift** while drawing to constrain the shape (straight arrows, squares).
-- **Ctrl+Z** / **Ctrl+Y** undo and redo, **Ctrl+S** saves the annotations, **Ctrl+C** copies the annotated image, **Ctrl+Enter** saves, copies and closes the editor.
+- **Ctrl+Z** / **Ctrl+Y** undo and redo, **Ctrl+S** saves the annotations, **Ctrl+C** copies the annotated image, **Ctrl+Enter** saves, copies and closes the editor. **Copy text** copies the text of the annotated image.
 - Zoom with **Ctrl+-** / **Ctrl++**, **Ctrl+0** fits the image to the window, **Ctrl+1** shows it at actual size.
 - Annotations stay editable: the original image is never modified, and crop and cut-out can be reset at any time. Copies, saved files and drags always contain the annotated image, and the blur is applied for good in them.
 
@@ -170,6 +203,22 @@ Select a video in the history, then click **Trim** to keep only part of it. A st
 
 <img src="docs/images/en/gif-export.png" width="460" alt="The Export as GIF dialog: frames per second, width, palette, loop, dithering, copy the file and the estimated size">
 
+## Transcribing a video
+
+Capto can turn the speech of a video into text and subtitles. The transcription runs on your PC with the Whisper speech model: the sound of your videos never leaves your computer.
+
+1. Once, in **Settings › Transcription**, choose a speech model, click **Download**, then **Save**. The model is downloaded only once, from huggingface.co. **Small** (465 MB) is recommended and chosen by default; **Tiny** (74 MB) is very fast but rough, **Medium** and **Large v3 Turbo** (1.4 and 1.5 GB) are more accurate but slow and need a lot of memory.
+2. Select a video with sound and click **Transcribe**, in the transcript panel under the player or in the menu of the video. To have every new video transcribed after its recording, turn on **Automatically transcribe new recordings with sound** in the same settings.
+3. The transcription runs in the background, one video at a time, and waits while a recording is in progress. The panel shows its progress, with **Cancel**. When the main window is hidden, a notification tells when it is done.
+
+<img src="docs/images/en/transcript.png" width="720" alt="A video with its transcript under the player: the language, the Copy, Save subtitles and Transcribe again links, and the time of each sentence">
+
+The transcript panel lists the sentences with their time in the video: click one (or press **Enter**) to jump to that point. **Copy** puts the whole text in the clipboard, as does **Copy text** in the menu of the video. **Save subtitles…** writes a SubRip (`.srt`) file, which video players and editors can open. **Transcribe again** redoes the transcription, for example after changing the model or the language.
+
+- The spoken language is detected automatically; if the detection goes wrong, choose the language in **Settings › Transcription**.
+- The bigger the model, the slower the transcription: start with **Small** and change only if needed.
+- A clip made with **Trim** has no transcript: transcribe it separately. A video without sound cannot be transcribed.
+
 ## Settings
 
 Open them with **Ctrl+,** in the main window or from the notification-area menu. Changes apply when you click **Save**.
@@ -182,7 +231,7 @@ Start with Windows, start minimized, close to the notification area, notificatio
 
 ### Capture
 
-Copy to the clipboard, also copy the file (useful for Outlook attachments), open the editor after the capture, play a sound, include the mouse pointer, delay of delayed captures, and the capture engine: Capto uses Windows Graphics Capture, which also captures covered windows; **Use the GDI capture engine** switches to the older engine, to try if captures come out black or incomplete. **About Capto** shows the engine in use.
+Copy to the clipboard, also copy the file (useful for Outlook attachments), open the editor after the capture, play a sound, include the mouse pointer, delay of delayed captures, and the capture engine: Capto uses Windows Graphics Capture, which also captures covered windows; **Use the GDI capture engine** switches to the older engine, to try if captures come out black or incomplete. **About Capto** shows the engine in use. **Language of the recognised text** is the language that **Copy text** reads (by default, the Windows languages).
 
 <img src="docs/images/en/settings-capture.png" width="620" alt="Capture settings">
 
@@ -200,6 +249,12 @@ Frames per second (15, 30 or 60; 30 by default), quality (low, standard or high)
 
 <img src="docs/images/en/settings-recording.png" width="620" alt="Recording settings">
 
+### Transcription
+
+The speech model (Small by default), with **Download** and **Delete** and a link to the models folder; the spoken language (detected automatically by default); and the automatic transcription of new recordings with sound (off by default, available once the chosen model is installed). The download starts as soon as you click **Download**; closing the settings during a download stops it. The model you choose is used once you click **Save**.
+
+<img src="docs/images/en/settings-transcription.png" width="620" alt="Transcription settings">
+
 ### Storage
 
 History folder, retention, default export folder, file-name pattern, format (PNG or JPEG) and JPEG quality. The file-name pattern accepts `{date}`, `{time}`, `{kind}`, `{width}`, `{height}` and `{index}`; the default is `Capto_{date}_{time}`.
@@ -208,7 +263,7 @@ History folder, retention, default export folder, file-name pattern, format (PNG
 
 ### Shortcuts
 
-Click a shortcut, then press the new key combination; **Backspace** clears the optional ones (delayed region, repeat last region, pause a recording).
+Click a shortcut, then press the new key combination; **Backspace** clears the optional ones (delayed region, repeat last region, scrolling capture, copy text from an area, pause a recording).
 
 <img src="docs/images/en/settings-hotkeys.png" width="620" alt="Shortcut settings">
 
@@ -224,12 +279,16 @@ Click a shortcut, then press the new key combination; **Backspace** clears the o
 | Ctrl+Shift+Alt+F | Capture all screens |
 | Ctrl+Shift+Alt+C | Repeat last region |
 | Ctrl+Shift+D | Delayed region capture |
+| (none by default) | Scrolling capture |
+| (none by default) | Copy text from an area |
 | Ctrl+Shift+Alt+R | Start or stop a recording |
 | (none by default) | Pause or resume a recording |
 
-**During a selection:** Esc cancels, W / R switch between window and region, Tab moves to the next window, C changes the region format, 0 to 9 pick a format. For a video, also S for a whole screen, A for the system sound and M for the microphone.
+**During a selection:** Esc cancels, W / R switch between window and region, Tab moves to the next window, C changes the region format, 0 to 9 pick a format. For a capture, also S for a scrolling capture (then M for manual scrolling) and T to copy text. For a video, S for a whole screen, A for the system sound and M for the microphone.
 
-**In the main window:** Ctrl+F search, Ctrl+C copy, Ctrl+S save, Ctrl+Shift+S save as, Enter annotate, F2 rename, Del delete, Ctrl+, settings. On a video, Space plays and pauses.
+**During a scrolling capture:** Esc finishes and keeps what was captured.
+
+**In the main window:** Ctrl+F search, Ctrl+C copy, Ctrl+S save, Ctrl+Shift+S save as, Enter annotate, F2 rename, Del delete, Ctrl+, settings. On a video, Space plays and pauses; in its transcript, Enter on a sentence jumps to it.
 
 **In the editor:** V A R T N H B C X tools, Ctrl+Z undo, Ctrl+Y redo, Ctrl+S save, Ctrl+C copy, Ctrl+Enter copy and close, Ctrl+D duplicate, Del delete, Ctrl+0 fit, Ctrl+1 actual size.
 
@@ -247,6 +306,8 @@ The changes of each version are listed in its [release notes](https://github.com
 |---|---|
 | Captures and their annotations | `%LocalAppData%\Capto\captures` (can be changed in **Settings › Storage**) |
 | Videos | the `recordings` folder inside the captures folder |
+| Transcripts | a `.srt` file next to each transcribed video, in the `recordings` folder |
+| Speech models | `%LocalAppData%\Capto\models\whisper` |
 | Settings | `%AppData%\Capto\settings.json` |
 | Last region and other state of this PC | `%LocalAppData%\Capto\state.json` |
 | Saved and exported images | `Pictures\Capto` by default |
@@ -254,7 +315,7 @@ The changes of each version are listed in its [release notes](https://github.com
 
 ## Uninstall
 
-Uninstall Capto from **Windows Settings › Apps › Installed apps**. Your captures and settings are kept, so a reinstall finds them again; delete the `%LocalAppData%\Capto` and `%AppData%\Capto` folders to remove them as well.
+Uninstall Capto from **Windows Settings › Apps › Installed apps**. The speech models are removed with the application. Your captures and settings are kept, so a reinstall finds them again; delete the `%LocalAppData%\Capto` and `%AppData%\Capto` folders to remove them as well.
 
 ## Troubleshooting
 
@@ -265,6 +326,11 @@ Uninstall Capto from **Windows Settings › Apps › Installed apps**. Your capt
 - **No H.264 video encoder is available:** on an N edition of Windows, install the Media Feature Pack from **Windows Settings › Apps › Optional features**.
 - **Windows blocks the microphone:** allow desktop apps to use the microphone in **Windows Settings › Privacy & security › Microphone**; Capto offers to open that page, or to record without the microphone.
 - **The microphone sounds like a phone call:** a Bluetooth headset switches to phone quality while its microphone is in use; use a wired microphone or record without it.
+- **A scrolling capture does not scroll:** the window runs as administrator or ignores the mouse wheel. Capto then switches to manual mode: scroll the area yourself, then click **Finish**.
+- **Copy text says that no language is installed:** add the **Optical character recognition** feature to a language in **Windows Settings › Time & language › Language & region**. On Windows 10, or in some organisations, an administrator may be needed.
+- **No text is recognised:** the text is too small (under about 11 pixels high) or blurred. Capture it larger, for example after zooming in the application.
+- **The speech model does not download:** check that huggingface.co is reachable (proxy, firewall). Capto uses the proxy settings of Windows.
+- **The transcription fails with a large model:** the PC lacks memory for it; choose a smaller model in **Settings › Transcription**.
 
 ---
 
